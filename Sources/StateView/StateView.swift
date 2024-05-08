@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 
-struct StateView<Content: View>: View {
+public struct StateView<Content: View>: View {
     @State private var set: Bool = false
 //    @State private var noAction: Bool = false
     
@@ -61,7 +61,7 @@ struct StateView<Content: View>: View {
     ///
     /// - Parameter setFunction: Things to do when the user attempts to turn the toggle on, with a `syncPresent` function mentioned in the discussion.
     /// - Parameter unsetFunction: Things to do when the user attempts to turn the toggle off, with a `syncPresent` function mentioned in the discussion.
-    init(actualState: Binding<Bool>,
+    public init(actualState: Binding<Bool>,
          @ViewBuilder stateContentView: @escaping (_ shownState: Binding<Bool>, _ actualState: Binding<Bool>, _ syncPresent: @escaping () -> Void) -> Content,
          setFunction: @escaping (_ syncPresent: @escaping () -> Void) -> Void = {_ in },
          unsetFunction: @escaping (_ syncPresent: @escaping () -> Void) -> Void = {_ in }
@@ -73,7 +73,7 @@ struct StateView<Content: View>: View {
         self.unsetFunction = unsetFunction
     }
     
-    var body: some View {
+    public var body: some View {
         ZStack {
             stateContentView(self.$set, self.$setted, syncPresent)
             .valueChanged(value: set) { goSet in
@@ -96,7 +96,7 @@ struct StateView<Content: View>: View {
         }
     }
     
-    func syncPresent() {
+    public func syncPresent() {
 //        noAction = true
         self.set = self.setted
 //        Timer.scheduledTimer(withTimeInterval: 0.0001, repeats: false) { _ in
